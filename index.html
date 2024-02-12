@@ -12,11 +12,15 @@
 
     <script>
         var socket = io();
+        socket.on("newuserconnect",function(data){
+            document.body.innerHTML='';
+            document.write(data.message)
+        });
         // socket.on("myCustomEvent",function(data){
         //     document.write(data.description);
         // })
-        socket.emit("myCustomEvent",{description:'A custom message from serer side'})
-
+        // socket.emit("myCustomEventFromClientSide",{description:'A custom message from client side'})
+        
     </script>
 
 </body> 
