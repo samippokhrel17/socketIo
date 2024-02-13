@@ -1,3 +1,5 @@
+// app.js
+
 var express = require("express");
 var app = express();
 var http = require('http').Server(app); // Create HTTP server using Express app
@@ -12,40 +14,22 @@ app.get("/", function(req, res) {
     res.sendFile(fileName, options); 
 });
 
+var roomno = 1;
 
-var users = 0;
-
-// Socket.IO connection 
 io.on("connection", function(socket) { 
-    console.log("A User connected");  
-    users++;
-    socket.emit("newuserconnect",{message:' Hii, Welcome Brother' }); //this is for new user who is connected  
+    console.log("A user connected");
 
-    socket.broadcast.emit('newuserconnect',{message: users + "users connected"})
-    
+    // Joining a room
+    socket.join("room-"+roomno); // This user joins room-1
 
-    // io.sockets.emit is for all the users 
-    // io.sockets.emit("broadcast",{message: users+'users connected!' });   //this for broadcasting i.e all the users will get messages
-    // setTimeout(() => {
-    //     // socket.send("Send Message from server side by prereserved events");
-    //     socket.emit("myCustomEvent",{description:'A custom message from serer side'})//to create constom event emit is used to catch in client side
-          
-    //  }, 3000);
-
-    socket.on('disconnect',function(data){
-        console.log("A user Disconnected");
-        users--;
-        socket.broadcast.emit('newuserconnect',{message: users + "users disconnected"})
-    })
-     
-//on works is to catch any events
+    // Emitting to a specific room
+    io.sockets.in("room-"+roomno).emit('connectedRoom', "You are connected to room no. "+roomno);
 
     socket.on("disconnect", function() { 
-        console.log("a user disconnected");
+        console.log("A user disconnected");
     });
 });
 
 http.listen(3000, function(){
-    console.log("server is running in port 3000");
+    console.log("Server is running on port 3000");
 });
- 

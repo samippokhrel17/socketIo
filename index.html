@@ -12,16 +12,40 @@
 
     <script>
         var socket = io();
-        socket.on("newuserconnect",function(data){
-            document.body.innerHTML='';
-            document.write(data.message)
+        socket.on("connectedRoom",function(data){
+            console.log("swift")
+            document.body.innerHTML= '';    //clear preexinting data
+            document.write(data);
         });
-        // socket.on("myCustomEvent",function(data){
-        //     document.write(data.description);
-        // })
-        // socket.emit("myCustomEventFromClientSide",{description:'A custom message from client side'})
-        
     </script>
 
 </body> 
-</html>
+</html> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
